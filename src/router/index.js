@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 import HomeView from "../views/HomeView.vue";
 import JoinQuiz from "../components/JoinQuiz.vue";
+import CreateQuiz from "../components/CreateQuiz.vue";
 const routes = [
   {
     path: "/",
@@ -11,6 +12,11 @@ const routes = [
     path: "/joinQuiz/",
     name: "JoinQuizVue",
     component: JoinQuiz,
+  },
+  {
+    path: "/createquiz/",
+    name: "CreateQuizVue",
+    component: CreateQuiz,
   },
 ];
 

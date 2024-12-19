@@ -10,7 +10,7 @@
 }
 
 #app {
-  font-family: "Nunito Sans", sans-serif !important;
+  font-family: "Nunito", serif !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   // text-align: center;

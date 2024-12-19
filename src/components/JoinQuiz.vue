@@ -133,21 +133,25 @@ export default {
   position: absolute;
   top: 20px;
   left: 20px;
-  color: #171754;
+  color: #fff;
+  background: #171754;
   text-decoration: none;
   display: flex;
   align-items: center;
   gap: 0.5rem;
   font-size: 1.1rem;
   transition: all 0.3s ease;
+  padding: 10px 20px;
+  border-radius: 8px;
 }
 
 .back-btn:hover {
   transform: translateX(-5px);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
-.btn:hover i {
-  animation: spin 1s ease-in-out;
+.back-btn i {
+  margin-right: 5px;
 }
 
 @keyframes spin {
