@@ -190,7 +190,7 @@ export default {
   font-size: 4rem;
   color: #171754;
   margin-bottom: 1rem;
-  font-weight: 700;
+  font-weight: 900;
   animation: float 3s ease-in-out infinite;
 }
 

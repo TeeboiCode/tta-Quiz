@@ -1,24 +1,26 @@
 <template>
   <div class="container-fluid p-5">
     <router-link to="/" class="back-btn">
-      <i class="fa-solid fa-arrow-left"></i>
-      Back
+      <button class="button-82-pushable" role="button">
+        <span class="button-82-shadow"></span>
+        <span class="button-82-edge create"></span>
+        <span class="button-82-front create text">
+          <i class="fa-solid fa-arrow-left"></i>
+          <span> Back </span>
+        </span>
+      </button>
     </router-link>
     <div class="content-container text-center">
-      <div class="container p-0">
+      <div class="container p-0 d-flex flex-column">
         <h1 class="title">Enter Pin</h1>
+
         <input
           type="text"
           class="pin-input"
           placeholder="Game Pin"
           maxlength="10"
         />
-        <!-- <router-link to="#" style="text-decoration: none">
-          <button class="start-btn btn">
-            <i class="fas fa-play"></i>
-            Start Quiz
-          </button>
-        </router-link> -->
+
         <router-link to="/joinQuiz/" style="text-decoration: none">
           <button class="button-82-pushable" role="button">
             <span class="button-82-shadow"></span>
@@ -76,8 +78,8 @@ export default {
 
 .title {
   font-size: 2.5rem;
-  color: #171754;
-  font-weight: 700;
+  color: hsl(120, 100%, 25%);
+  font-weight: 900;
   margin-bottom: 2rem;
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
@@ -85,18 +87,21 @@ export default {
 .pin-input {
   width: 100%;
   max-width: 300px;
-  padding: 1rem;
-  font-size: 1.2rem;
-  border: none;
+  padding: 0.75rem;
+  font-size: 2rem;
+  font-weight: 800;
+  border: 3px solid hsl(340deg 100% 33%) !important;
   border-radius: 10px;
+  outline: none;
+  text-align: center;
   margin-bottom: 2rem;
-  background: #dce5ff;
+  background: hsla(340, 100%, 33%, 0.103);
   transition: all 0.3s ease;
 }
 
 .pin-input:focus {
   outline: none;
-  box-shadow: 0 0 0 3px rgba(10, 105, 237, 0.5);
+  box-shadow: 0 0 0 3px hsla(340, 100%, 33%, 0.353);
 }
 
 .start-btn {
@@ -105,7 +110,7 @@ export default {
   border: none;
   border-radius: 30px;
   cursor: pointer;
-  background: #171754;
+  /* background: #171754; */
   color: white;
   display: flex;
   align-items: center;
@@ -135,30 +140,27 @@ export default {
 .back-btn {
   position: absolute;
   top: 20px;
-  left: 200px;
+  left: 40px;
   color: #fff;
-  background: #171754;
+  /* background: #171754; */
   text-decoration: none;
   display: flex;
   align-items: center;
   gap: 0.5rem;
   font-size: 1.1rem;
   transition: all 0.3s ease;
-  padding: 10px 20px;
-  border-radius: 8px;
+  padding: 8px 10px;
+  /* border-radius: 8px; */
+  z-index: 10;
 }
 
-.back-btn:hover {
-  transform: translateX(-5px);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+@media (min-width: 500px) and (max-height: 499px) {
+  .container-fluid {
+    background-image: url("../assets/bg-2.png") !important;
+  }
 }
 
-.back-btn i {
-  margin-right: 5px;
-}
-
-
-@media (min-width: 500px) {
+@media (min-width: 900px) and (max-height: 1000px) {
   .container-fluid {
     background-image: url("../assets/bg-2.png");
   }
@@ -170,7 +172,12 @@ export default {
   }
 }
 
-
+@media (min-width: 1010px) {
+  .back-btn {
+    top: 60px;
+    left: 150px;
+  }
+}
 
 @keyframes spin {
   0% {
@@ -238,6 +245,28 @@ export default {
   );
 }
 
+.button-82-edge.create {
+  background: linear-gradient(
+    to left,
+    hsl(340deg 100% 16%) 0%,
+    hsl(340deg 100% 32%) 8%,
+    hsl(340deg 100% 32%) 92%,
+    hsl(340deg 100% 16%) 100%
+  );
+}
+
+.back-btn .button-82-front {
+  display: block;
+  position: relative;
+  padding: 6px 15px;
+  border-radius: 12px;
+  font-size: 1rem;
+  color: white;
+  will-change: transform;
+  transform: translateY(-4px);
+  transition: transform 600ms cubic-bezier(0.3, 0.7, 0.4, 1);
+}
+
 .button-82-front {
   display: block;
   position: relative;
@@ -251,7 +280,7 @@ export default {
 }
 
 .button-82-front.create {
-  background: hsl(240, 57%, 21%);
+  background: hsl(340, 100%, 21%);
 }
 
 .button-82-front.join {
