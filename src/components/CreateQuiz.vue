@@ -14,26 +14,33 @@
       <h1 class="title">Create an account</h1>
       <p class="subtitle">Sign up</p>
 
-      <form @submit.prevent.enter="handleSubmit">
+      <form @submit.prevent="handleSubmit">
         <div class="form-group">
           <input
             type="email"
+            @blur="handleInputEmail"
+            ref="emailInput"
             class="form-control"
+            :class="!isValidEmail ? '' : 'inValidColor'"
             placeholder="Email"
-            v-model="userInfo.email"
-            required
+            v-model.lazy.trim="userInfo.email"
           />
+
+          <p class="error" v-if="isValidEmail">
+            {{ errors.email }}
+          </p>
         </div>
 
-        <div class="form-group">
+        <div class="form-group psw">
           <input
             :type="showPassword ? 'text' : 'password'"
+            @blur="handleInputPassword"
+            ref="passwordInput"
+            :class="!isValidPassword ? '' : 'inValidColor'"
             class="form-control"
             id="password"
-            maxlength="6"
-            v-model="userInfo.password"
+            v-model.lazy.trim="userInfo.password"
             placeholder="Password"
-            required
           />
           <i
             :class="[
@@ -43,19 +50,19 @@
             ]"
             @click="togglePassword"
           ></i>
-        </div>
-        <p class="passwordinfo">
-          Your password needs to be at least 6 characters.
-        </p>
 
-        <div class="form-group">
+          <p class="error" v-if="isValidPassword">{{ errors.password }}</p>
+        </div>
+
+        <div class="form-group comfirm mt-4">
           <input
             :type="showConfirmPassword ? 'text' : 'password'"
+            @blur="handleComfirmPassword"
+            :class="!isValidConfirmPassword ? '' : 'inValidColor'"
             class="form-control"
             id="password"
             v-model="userInfo.confirmPassword"
             placeholder="Confirm Password"
-            required
           />
           <i
             :class="[
@@ -65,6 +72,10 @@
             ]"
             @click="toggleConfirmPassword"
           ></i>
+
+          <p class="error" v-if="isValidConfirmPassword">
+            {{ errors.confirmPassword }}
+          </p>
         </div>
 
         <div class="checkbox-group">
@@ -73,18 +84,13 @@
             id="updates"
             v-model="userInfo.ttaInfo"
             true-value="yes"
-            false-value="no"
+            false-value="yes"
           />
           <label for="updates"
             >I want to receive information, offers, recommendations and updates
             from TTA</label
           >
         </div>
-
-        <!-- <button type="submit" class="btn btn-primary">
-          <i class="fas fa-user-plus me-1"></i>
-          Sign Up
-        </button> -->
 
         <button type="submit" class="button-82-pushable w-100" role="button">
           <span class="button-82-shadow"></span>
@@ -127,6 +133,17 @@ export default {
         confirmPassword: "",
         ttaInfo: "no",
       },
+      errors: {
+        email: "",
+        password: "",
+        confirmPassword: "",
+      },
+
+      emailRegex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
+      isValidEmail: null,
+      isValidPassword: null,
+      isValidConfirmPassword: null,
+      validateFormInput: null,
     };
   },
   methods: {
@@ -137,7 +154,66 @@ export default {
     toggleConfirmPassword() {
       this.showConfirmPassword = !this.showConfirmPassword;
     },
+
+    handleInputEmail() {
+      if (this.emailRegex.test(this.userInfo.email)) {
+        this.isValidEmail = false;
+        this.errors.email = "";
+      } else {
+        this.isValidEmail = true;
+        this.errors.email = "Please enter a valid email address.";
+        this.$refs.emailInput.focus();
+      }
+    },
+
+    handleInputPassword() {
+      if (this.userInfo.password.length >= 6) {
+        this.isValidPassword = false;
+        this.errors.password = "";
+      } else {
+        this.isValidPassword = true;
+        this.errors.password =
+          "Your password needs to be at least 6 characters.";
+        this.$refs.passwordInput.focus();
+      }
+    },
+
+    handleComfirmPassword() {
+      if (this.userInfo.password === this.userInfo.confirmPassword) {
+        this.isValidConfirmPassword = false;
+        this.errors.confirmPassword = "";
+      } else {
+        this.isValidConfirmPassword = true;
+        this.errors.confirmPassword = "The passwords don’t match. Try again.";
+      }
+    },
+
+    validateForm() {
+      if (
+        !this.isValidEmail &&
+        !this.isValidPassword &&
+        !this.isValidConfirmPassword
+      ) {
+        this.validateFormInput = true;
+      } else {
+        this.validateFormInput = false;
+      }
+    },
+
+    handleSubmit() {
+      this.validateForm();
+      if (this.validateFormInput) {
+        alert("Welcome Home");
+      } else {
+        alert(this.validateFormInput);
+        this.isValidEmail = true;
+        this.isValidPassword = true;
+        this.isValidConfirmPassword = true;
+      }
+    },
   },
+
+  mounted() {},
 };
 </script>
 
@@ -219,23 +295,44 @@ export default {
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 35px;
   position: relative;
 }
 
-.passwordinfo {
+.error {
   color: hsl(340deg 100% 33%);
+  position: absolute;
 }
 
 .form-control {
   width: 100%;
   padding: 1.5rem !important;
-  border: 3px solid hsl(340deg 100% 33%) !important;
-  background: hsla(340, 100%, 33%, 0.103);
   border-radius: 8px;
   font-size: 1.5rem;
   font-weight: 700;
   transition: all 0.3s ease;
+}
+
+.inValidColor {
+  border: 3px solid hsl(340deg 100% 33%) !important;
+  background: hsla(340, 100%, 33%, 0.103);
+}
+
+.form-control.inValidColor:focus {
+  outline: none;
+  border-color: hsl(340, 92%, 48%);
+  box-shadow: 0 0 0 3px hsla(340, 92%, 48%, 0.353);
+}
+
+.validColor {
+  border: 3px solid hsl(120deg 100% 33%) !important;
+  background: hsla(120, 100%, 33%, 0.103);
+}
+
+.form-control.validColor:focus {
+  outline: none;
+  border-color: hsl(120, 92%, 48%);
+  box-shadow: 0 0 0 3px hsla(120, 92%, 48%, 0.353);
 }
 
 .form-control::placeholder {
@@ -244,8 +341,8 @@ export default {
 
 .form-control:focus {
   outline: none;
-  border-color: #0a69ed;
-  box-shadow: 0 0 0 3px hsla(340, 100%, 33%, 0.353);
+  border-color: hsl(215, 92%, 48%);
+  box-shadow: 0 0 0 3px hsla(215, 92%, 48%, 0.353);
 }
 
 .password-toggle {
