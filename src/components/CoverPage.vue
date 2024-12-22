@@ -15,7 +15,7 @@
         <span><img src="../assets/icons/star-icon.png" width="30" /></span>
       </p>
       <div class="btn-container d-flex justify-content-center">
-        <router-link to="/createquiz/" style="text-decoration: none">
+        <router-link to="/login/" style="text-decoration: none">
           <button class="button-82-pushable" role="button">
             <span class="button-82-shadow"></span>
             <span class="button-82-edge create"></span>

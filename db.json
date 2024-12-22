@@ -1,3 +1,28 @@
 {
-  "users": []
+  "users": [
+    {
+      "id": "ttaQuiz-001",
+      "email": "oluwaleyemicheal8225@gmail.com",
+      "password": "123456",
+      "ttaInfo": "yes"
+    },
+    {
+      "id": "ttaQuiz-002",
+      "email": "oluwaleyetaiwo8225@gmail.com",
+      "password": "123456",
+      "ttaInfo": "no"
+    },
+    {
+      "id": "bad3",
+      "email": "ogunleyetaiwo@gmail.com",
+      "password": "123456",
+      "ttaInfo": "yes"
+    },
+    {
+      "id": "377a",
+      "email": "ogunleyetaiwo65@ga.com",
+      "password": "123456",
+      "ttaInfo": "no"
+    }
+  ]
 }

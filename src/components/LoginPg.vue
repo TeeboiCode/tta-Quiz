@@ -11,10 +11,9 @@
           </span>
         </button>
       </router-link>
-      <h1 class="title">Create an account</h1>
-      <p class="subtitle">Sign up</p>
+      <p class="subtitle">Log in</p>
 
-      <form @submit.prevent="handleSubmit">
+      <form @submit.prevent="handleLogin">
         <div class="form-group">
           <input
             type="email"
@@ -62,46 +61,9 @@
           </p>
         </div>
 
-        <div class="form-group comfirm mt-4">
-          <input
-            :type="showConfirmPassword ? 'text' : 'password'"
-            @blur="handleComfirmPassword"
-            ref="comfirmPasswordInput"
-            :class="[
-              isValidConfirmPasswordMessage ? 'inValidColor' : '',
-              isValidConfirmPassword ? 'validColor' : '',
-            ]"
-            class="form-control"
-            id="password"
-            v-model="userInfo.confirmPassword"
-            placeholder="Confirm Password"
-          />
-          <i
-            :class="[
-              'fas',
-              showConfirmPassword ? 'fa-eye-slash' : 'fa-eye',
-              'password-toggle',
-            ]"
-            @click="toggleConfirmPassword"
-          ></i>
-
-          <p class="error" v-if="isValidConfirmPasswordMessage">
-            {{ errors.confirmPassword }}
-          </p>
-        </div>
-
-        <div class="checkbox-group">
-          <input
-            type="checkbox"
-            id="updates"
-            v-model="userInfo.ttaInfo"
-            true-value="yes"
-            false-value="yes"
-          />
-          <label for="updates"
-            >I want to receive information, offers, recommendations and updates
-            from TTA</label
-          >
+        <div class="login-link">
+          Forgot password?
+          <router-link to="/createquiz/">Reset your password</router-link>
         </div>
 
         <button type="submit" class="button-82-pushable w-100" role="button">
@@ -111,15 +73,16 @@
             <img
               width="30"
               height="30"
-              src="https://img.icons8.com/fluency/48/add-user-male.png"
-              alt="add-user-male"
+              src="https://img.icons8.com/scribby/50/import.png"
+              alt="import"
             />
-            <span> Sign Up </span>
+            <span> Log in </span>
           </span>
         </button>
 
         <div class="login-link">
-          Already have an account? <router-link to="/login/">Login</router-link>
+          Don't have an account?
+          <router-link to="/createquiz/">Sign up</router-link>
         </div>
 
         <div class="terms">
@@ -138,23 +101,18 @@ import axios from "axios";
 import { nextTick } from "vue";
 
 export default {
-  name: "CreateQuizVue",
+  name: "LoginPgVue",
   data() {
     return {
       userData: [],
-      emails: [],
       showPassword: false,
-      showConfirmPassword: false,
       userInfo: {
         email: "",
         password: "",
-        confirmPassword: "",
-        ttaInfo: "no",
       },
       errors: {
         email: "",
         password: "",
-        confirmPassword: "",
       },
 
       emailRegex: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
@@ -162,27 +120,12 @@ export default {
       isValidEmailMessage: false,
       isValidPasswordMessage: false,
       isValidPassword: false,
-      isValidConfirmPassword: false,
-      isValidConfirmPasswordMessage: false,
       validateFormInput: false,
     };
   },
   methods: {
     togglePassword() {
       this.showPassword = !this.showPassword;
-    },
-
-    toggleConfirmPassword() {
-      this.showConfirmPassword = !this.showConfirmPassword;
-    },
-
-    async fetchUserData() {
-      let res = await axios.get("http://localhost:3000/users");
-      this.userData = await res.data;
-
-      this.userData.forEach((element) => {
-        this.emails.push(element.email);
-      });
     },
 
     handleInputEmail() {
@@ -220,24 +163,8 @@ export default {
       }
     },
 
-    handleComfirmPassword() {
-      if (this.userInfo.password === this.userInfo.confirmPassword) {
-        this.isValidConfirmPassword = true;
-        this.isValidConfirmPasswordMessage = false;
-        this.errors.confirmPassword = "";
-      } else {
-        this.isValidConfirmPassword = false;
-        this.isValidConfirmPasswordMessage = true;
-        this.errors.confirmPassword = "The passwords don’t match. Try again.";
-      }
-    },
-
     validateForm() {
-      if (
-        this.isValidEmail &&
-        this.isValidPassword &&
-        this.isValidConfirmPassword
-      ) {
+      if (this.isValidEmail && this.isValidPassword) {
         this.validateFormInput = true;
       } else if (!this.isValidEmail) {
         this.validateFormInput = false;
@@ -253,85 +180,67 @@ export default {
             this.$refs.passwordInput.focus();
           }
         });
-      } else if (!this.isValidConfirmPassword) {
-        this.validateFormInput = false;
-        nextTick(() => {
-          if (this.$refs.comfirmPasswordInput) {
-            this.$refs.comfirmPasswordInput.focus();
-          }
-        });
       } else {
         this.validateFormInput = false;
       }
     },
 
-    async handleSubmit() {
+    async handleLogin() {
       this.validateForm();
+      if (this.validateFormInput) {
+        try {
+          let res = await axios.get("http://localhost:3000/users");
 
-      if (this.emails.includes(this.userInfo.email)) {
-        Swal.fire({
-          title: "Error!",
-          text: "The email has already been used. Please log in",
-          icon: "warning",
-          confirmButtonText: "OK",
-        }).then(() => {
-          this.$router.push("/login/").catch((err) => console.error(err));
-        });
-      } else {
-        if (this.validateFormInput) {
-          try {
-            let userInput = {
-              email: this.userInfo.email,
-              password: this.userInfo.password,
-              ttaInfo: this.userInfo.ttaInfo,
-            };
+          const users = await res.data.find((user) => {
+            if (
+              user.email === this.userInfo.email &&
+              user.password === this.userInfo.password
+            ) {
+              return true;
+            }
+          });
 
-            await axios.post("http://localhost:3000/users", userInput);
-
+          if (users) {
             Swal.fire({
-              title: "<b>Success!</b>",
-              text: "Account created successfully.",
+              title: "Login Successful!",
+              text: "Login completed. You're now signed in",
               icon: "success",
               confirmButtonText: "OK",
+            }).then(() => {
+              this.$router.push("/");
             });
-
-            this.userInfo.email = "";
-            this.userInfo.password = "";
-            this.userInfo.confirmPassword = "";
-            this.userInfo.ttaInfo = "no";
-            this.isValidEmailMessage = false;
-            this.isValidPasswordMessage = false;
-            this.isValidConfirmPasswordMessage = false;
-            this.isValidEmail = false;
-            this.isValidPassword = false;
-            this.isValidConfirmPassword = false;
-          } catch (error) {
-            console.log(`Error: ${error}`);
+          } else {
             Swal.fire({
-              title: "Invalid Input!",
-              text: "Please make sure all fields are filled out correctly.",
+              title: "Invalid Email or Password!",
+              text: "The email or password you entered is incorrect. Please try or reset your password",
               icon: "error",
               confirmButtonText: "OK",
             });
           }
-        } else {
-          Swal.fire({
-            title: "Validation Error",
-            text: "Please fix the errors in the form.",
-            icon: "warning",
-            confirmButtonText: "OK",
-          });
-          this.isValidEmailMessage = true;
-          this.isValidPasswordMessage = true;
-          this.isValidConfirmPasswordMessage = true;
+
+          this.userInfo.email = "";
+          this.userInfo.password = "";
+          this.isValidEmailMessage = false;
+          this.isValidPasswordMessage = false;
+          this.isValidEmail = false;
+          this.isValidPassword = false;
+        } catch (error) {
+          console.log(`Error: ${error}`);
         }
+      } else {
+        Swal.fire({
+          title: "Required Fields Missing",
+          text: "Missing information! Ensure all required fields are completed.",
+          icon: "warning",
+          confirmButtonText: "OK",
+        });
+        this.isValidEmailMessage = true;
+        this.isValidPasswordMessage = true;
       }
     },
   },
 
-  mounted() {
-    this.fetchUserData();
-  },
+  mounted() {},
 };
 </script>
 
