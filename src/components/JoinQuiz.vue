@@ -49,7 +49,7 @@ export default {
   justify-content: center;
   align-items: center;
   /* background: #f0f4ff5b; */
-  background-image: url("../assets/bg-3.png");
+  background-image: url("../assets/bg-3-3.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
@@ -77,7 +77,7 @@ export default {
 }
 
 .title {
-  font-size: 2.5rem;
+  font-size: 2rem;
   color: hsl(120, 100%, 25%);
   font-weight: 900;
   margin-bottom: 2rem;
@@ -154,15 +154,21 @@ export default {
   z-index: 10;
 }
 
+@media (min-width: 350px) {
+  .title {
+    font-size: 2.5rem;
+  }
+}
+
 @media (min-width: 500px) and (max-height: 499px) {
   .container-fluid {
-    background-image: url("../assets/bg-2.png") !important;
+    background-image: url("../assets/bg-2-2.jpg") !important;
   }
 }
 
 @media (min-width: 900px) and (max-height: 1000px) {
   .container-fluid {
-    background-image: url("../assets/bg-2.png");
+    background-image: url("../assets/bg-2-2.jpg");
   }
 }
 

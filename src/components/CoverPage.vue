@@ -7,22 +7,25 @@
     <div class="sparkle"></div>
     <div class="sparkle"></div>
     <div class="sparkle"></div>
+
     <div class="content-container text-center">
       <h1 class="title">tta Quiz</h1>
       <p class="subtitle">
-        <span><img src="../assets/icons/star-icon.png" width="30" /></span>
+        <span><img src="../assets/icons/star-icon.png" /></span>
         Test Your Knowledge Effortlessly
-        <span><img src="../assets/icons/star-icon.png" width="30" /></span>
+        <span><img src="../assets/icons/star-icon.png" /></span>
       </p>
       <div class="btn-container d-flex justify-content-center">
-        <router-link to="/login/" style="text-decoration: none">
+        <router-link
+          to="/login/"
+          class="btn-create"
+          style="text-decoration: none"
+        >
           <button class="button-82-pushable" role="button">
             <span class="button-82-shadow"></span>
             <span class="button-82-edge create"></span>
             <span class="button-82-front create text">
               <img
-                width="30 "
-                height="30"
                 src="https://img.icons8.com/emoji/48/pencil-emoji.png"
                 alt="pencil-emoji"
               />
@@ -86,6 +89,11 @@ export default {
   opacity: 0.127;
   animation: rotateSunburst 40s linear infinite;
   z-index: 0;
+}
+
+.container {
+  width: 90%;
+  padding: 1.5rem;
 }
 
 .bubble {
@@ -177,7 +185,7 @@ export default {
 }
 
 .content-container {
-  padding: 2rem;
+  padding: 2rem 1rem;
   background: #fff;
   backdrop-filter: blur(10px);
   border-radius: 20px;
@@ -187,7 +195,7 @@ export default {
 }
 
 .title {
-  font-size: 4rem;
+  font-size: 3rem;
   color: #171754;
   margin-bottom: 1rem;
   font-weight: 900;
@@ -195,15 +203,22 @@ export default {
 }
 
 .subtitle {
-  font-size: 1.5rem;
+  font-size: 1rem;
+  white-space: nowrap;
   color: #171754;
   margin-bottom: 3rem;
   font-weight: 700;
   animation: fadeIn 1s ease-out 0.5s both;
 }
 
+.button-82-pushable img,
+.subtitle img {
+  width: 20px;
+  height: 20px;
+}
+
 .btn-container {
-  gap: 2rem;
+  gap: 1rem;
   animation: fadeIn 1s ease-out 1s both;
 }
 
@@ -277,31 +292,6 @@ export default {
   }
 }
 
-@media (max-width: 768px) {
-  .container {
-    width: 90%;
-    padding: 1.5rem;
-  }
-
-  .title {
-    font-size: 3rem;
-  }
-
-  .subtitle {
-    font-size: 1.2rem;
-  }
-
-  .btn-container {
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .btn {
-    width: 100%;
-    justify-content: center;
-  }
-}
-
 .button-82-pushable {
   position: relative;
   border: none;
@@ -313,6 +303,10 @@ export default {
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+}
+
+.button-82-pushable {
+  margin-top: 15px;
 }
 
 .button-82-shadow {
@@ -377,10 +371,30 @@ export default {
   background: hsl(120, 100%, 25%);
 }
 
+@media (max-width: 768px) {
+  .btn-container {
+    flex-direction: column;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 @media (min-width: 768px) {
+  .subtitle {
+    font-size: 1.5rem;
+  }
+
   .button-82-front {
     font-size: 1.25rem;
     padding: 12px 42px;
+  }
+}
+@media (min-width: 800px) {
+  .button-82-pushable {
+    margin-top: 0;
   }
 }
 

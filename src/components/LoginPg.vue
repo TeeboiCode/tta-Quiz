@@ -19,7 +19,7 @@
             type="email"
             @blur="handleInputEmail"
             ref="emailInput"
-            class="form-control"
+            class="form-control email"
             :class="[
               isValidEmailMessage ? 'inValidColor' : '',
               isValidEmail ? 'validColor' : '',
@@ -250,22 +250,10 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  background-image: url("../assets/bg-3.png");
+  background-image: url("../assets/bg-3-3.jpg");
   background-repeat: no-repeat;
   background-position: center;
   background-size: cover;
-}
-
-@media (min-width: 500px) and (max-height: 499px) {
-  .container-fluid {
-    background-image: url("../assets/bg-2.png") !important;
-  }
-}
-
-@media (min-width: 900px) and (max-height: 1000px) {
-  .container-fluid {
-    background-image: url("../assets/bg-2.png");
-  }
 }
 
 .container {
@@ -276,14 +264,14 @@ export default {
   width: 100%;
   max-width: 500px;
   /* animation: fadeIn 0.5s ease-out; */
-  margin-top: 40px;
+  margin-top: 90px;
   margin-bottom: 40px;
 }
 
 .back-btn {
   position: absolute;
   top: 20px;
-  left: 40px;
+  left: 10px;
   color: #fff;
   /* background: #171754; */
   text-decoration: none;
@@ -295,13 +283,6 @@ export default {
   padding: 8px 10px;
   /* border-radius: 8px; */
   z-index: 10;
-}
-
-@media (min-width: 1010px) {
-  .back-btn {
-    top: 60px;
-    left: 150px;
-  }
 }
 
 .title {
@@ -333,11 +314,15 @@ export default {
 
 .form-control {
   width: 100%;
-  padding: 1.5rem !important;
+  padding: 1.5rem 2.5rem 1.5rem 1.5rem !important;
   border-radius: 8px;
   font-size: 1.5rem;
   font-weight: 700;
   transition: all 0.3s ease;
+}
+
+.form-control.email {
+  padding: 1.5rem !important;
 }
 
 .inValidColor {
@@ -490,13 +475,6 @@ export default {
 
 .button-82-front.signUp {
   background: hsl(120, 100%, 25%);
-}
-
-@media (min-width: 768px) {
-  .button-82-front {
-    font-size: 1.25rem;
-    padding: 12px 42px;
-  }
 }
 
 .button-82-pushable:hover {
@@ -721,14 +699,38 @@ export default {
   text-align: center;
 }
 
-/* Hover effect */
 .btn:hover {
   transform: translateY(-1px);
 }
 
-/* Focus state */
 .btn:focus {
   outline: none;
   box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+}
+
+@media (min-width: 500px) and (max-height: 499px) {
+  .container-fluid {
+    background-image: url("../assets/bg-2-2.jpg") !important;
+  }
+}
+
+@media (min-width: 900px) and (max-height: 1000px) {
+  .container-fluid {
+    background-image: url("../assets/bg-2-2.jpg");
+  }
+}
+
+@media (min-width: 1010px) {
+  .back-btn {
+    top: 60px;
+    left: 150px;
+  }
+}
+
+@media (min-width: 768px) {
+  .button-82-front {
+    font-size: 1.25rem;
+    padding: 12px 42px;
+  }
 }
 </style>
